@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>NGIP</title>
+    <link rel="icon" href="icon/favicon-16x16-dunplab-manifest-026.ico">
+    <link rel="manifest" href="dunplab-manifest-026.json">
+    <link href="bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="card rounded-lg mt-3 mx-auto">
+            <img src="img/bgtools.png" class="card-img-top" alt="...">
+        </div>
+        <div class="card mt-3" style="width: 100%; margin-bottom: 65px;">
+            <div class="card-body">
+                <h4 class="card-title text-center"> Ngitung IP </h4>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h6 class="text-center">IP Address /CIRD</h6>
+                        <div class="input-group" style="font-size: smaller;">
+                            <input type="text" class="form-control ip" maxlength="3">
+                            <input type="text" class="form-control ip" maxlength="3">
+                            <input type="text" class="form-control ip" maxlength="3">
+                            <input type="text" class="form-control ip" maxlength="3">
+                            <input type="text" class="form-control" id="cird" maxlength="2" placeholder="/">
+                        </div>
+                        <div class="row">
+                            <button onclick="calculate(this)"
+                                class="btn btn-primary rounded-pill mx-auto mt-2">Calculate</button>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Submask :
+                            <span class="nm">-</span>.
+                            <span class="nm">-</span>.
+                            <span class="nm">-</span>.
+                            <span class="nm">-</span>
+                        </p>
+                        <p>Submask Biner :</p>
+                        <p style="font-size: smaller;" id="biner-netmask">
+                            <span class="netmaskBiner">-</span>.
+                            <span class="netmaskBiner">-</span>.
+                            <span class="netmaskBiner">-</span>.
+                            <span class="netmaskBiner">-</span>
+                        </p>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Jumlah Subnet : <span id="jumlah-subnet">-</span></p>
+                        <p>Jumlah Host : <span id="jumlah-host">-</span></p>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Network :
+                            <span class="net-id">-</span>.
+                            <span class="net-id">-</span>.
+                            <span class="net-id">-</span>.
+                            <span class="net-id">-</span>
+                        </p>
+                        <p>Broadcast :
+                            <span class="broadcast-id">-</span>.
+                            <span class="broadcast-id">-</span>.
+                            <span class="broadcast-id">-</span>.
+                            <span class="broadcast-id">-</span>
+                        </p>
+                        <p>Host Min :
+                            <span class="min-id">-</span>.
+                            <span class="min-id">-</span>.
+                            <span class="min-id">-</span>.
+                            <span class="min-id">-</span>
+                        </p>
+                        <p>Host Max :
+                            <span class="max-id">-</span>.
+                            <span class="max-id">-</span>.
+                            <span class="max-id">-</span>.
+                            <span class="max-id">-</span>
+                        </p>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Jenis IP : <span id="jenis-ip">-</span></p>
+                        <p>IP Kelas : <span id="ip-kelas">-</span></p>
+                    </li>
+                    <li class="list-group-item">
+                        <p>Block Subnet : <span id="block-subnet">-</span></p>
+                        <p>Block List :</p>
+                        <p id="block-list"></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script src="Core.js"></script>
+        <script src="App.js"></script>
+        <script>
+            const app = new App({
+                SUBMASK_EL: document.querySelectorAll('.nm'),
+                IP_EL: document.querySelectorAll('.ip'),
+                CIRD_EL: document.getElementById('cird'),
+                JMLSUBNET_EL: document.getElementById('jumlah-subnet'),
+                JMLHOST_EL: document.getElementById('jumlah-host'),
+                BLCKSUBNET_EL: document.getElementById('block-subnet'),
+                BLCKSUBNETLIST_EL: document.getElementById('block-list'),
+                NETMASKBIN_EL: document.querySelectorAll('.netmaskBiner'),
+                NETID_EL: document.querySelectorAll('.net-id'),
+                BCID_EL: document.querySelectorAll('.broadcast-id'),
+                CLASS_EL: document.getElementById('ip-kelas'),
+                MAXRG_EL: document.querySelectorAll('.max-id'),
+                MINRG_EL: document.querySelectorAll('.min-id'),
+                IPTYPE_EL: document.getElementById('jenis-ip')
+            })
+
+            function calculate(self) {
+                if (self.innerHTML === 'Calculate') {
+                    app.Calculate()
+                    self.innerHTML = 'Clear'
+                } else {
+                    app.Clear()
+                    self.innerHTML = 'Calculate'
+                }
+            }
+
+
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('/serviceWorker.js').then(function (registration) {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, function (err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
+        </script>
+</body>
+
+</html>
